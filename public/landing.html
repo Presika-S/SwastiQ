@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style id="gate">html{visibility:hidden}</style>
+<script>fetch("/api/auth?a=me",{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject()).then(m=>{window.SQ_USER=m;document.getElementById("gate").remove()}).catch(()=>location.replace("/"))</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SwastiQ – Community health records, spoken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1b4f9c;--deep:#12376f;--mint:#2bb39b;--amber:#ffb23e;--ink:#17294a;--mu:#51647f;--sky:#eef4fb;--ln:#d9e4f2}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font:17px/1.55 'Instrument Sans',system-ui,sans-serif;color:var(--ink);background:#fff}
+a{color:inherit}:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.015em;line-height:1.08}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.util{background:var(--deep);color:#dbe7f8;font-size:14px}.util .wrap{display:flex;justify-content:space-between;gap:12px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.util b{color:var(--amber);font-weight:600}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+header .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.logo{display:flex;gap:9px;align-items:center;font:600 24px Fraunces,serif;color:var(--blue);text-decoration:none;margin-right:auto}
+.logo svg{width:34px;height:34px}
+nav a{margin-left:26px;text-decoration:none;font-weight:500;color:var(--mu)}nav a:hover{color:var(--blue)}
+.btn{min-height:50px;padding:0 26px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font:600 16px 'Instrument Sans';text-decoration:none;background:var(--blue);color:#fff;border:2px solid var(--blue);transition:transform .2s,box-shadow .2s;cursor:pointer}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(27,79,156,.28)}
+.btn.o{background:#fff;color:var(--blue)}.btn.m{background:var(--mint);border-color:var(--mint)}.btn.a{background:var(--amber);border-color:var(--amber);color:#3a2600}
+.hero{background:var(--sky);position:relative;overflow:hidden;padding:clamp(40px,7vw,90px) 0 150px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center}
+.hero h1{font-size:clamp(40px,5.6vw,78px);max-width:13ch}
+.hero p{margin:22px 0 32px;color:var(--mu);font-size:19px;max-width:46ch}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.trust{margin-top:34px;display:flex;gap:22px;flex-wrap:wrap;font-size:15px;color:var(--mu)}
+.trust span{display:flex;gap:8px;align-items:center}.trust i{width:10px;height:10px;border-radius:50%;background:var(--mint)}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:90px;display:block}
+
+/* 3D scene */
+.scene{height:min(74vh,580px);perspective:1300px;display:grid;place-items:center;position:relative}
+.rig{position:relative;width:260px;height:520px;transform-style:preserve-3d;will-change:transform}
+.phone,.phone::before,.phone::after{position:absolute;inset:0;border-radius:40px;background:var(--blue)}
+.phone{padding:11px;box-shadow:0 50px 70px rgba(18,55,111,.3);transform-style:preserve-3d}
+.phone::before{content:"";transform:translateZ(-9px);background:var(--deep)}.phone::after{content:"";transform:translateZ(-18px);background:#0e2c59}
+.screen{position:relative;width:100%;height:100%;border-radius:30px;background:#fff;padding:20px 16px;overflow:hidden;display:flex;flex-direction:column;gap:12px}
+.screen h4{font:600 15px Fraunces,serif;color:var(--blue)}
+.mic{width:78px;height:78px;border-radius:50%;background:var(--mint);margin:6px auto 0;display:grid;place-items:center;position:relative}
+.mic svg{width:34px;color:#fff}.mic::after{content:"";position:absolute;inset:-8px;border:3px solid var(--mint);border-radius:50%;animation:pu 1.6s infinite}
+@keyframes pu{to{transform:scale(1.35);opacity:0}}
+.bars{display:flex;gap:4px;justify-content:center;align-items:center;height:42px}.bars i{width:5px;border-radius:3px;background:var(--blue);animation:b 1s ease-in-out infinite}
+@keyframes b{50%{height:36px}}
+.tx{font:italic 500 14px/1.4 Fraunces,serif;color:var(--mu);text-align:center}
+.mini{margin-top:auto;border:1px solid var(--ln);border-radius:14px;padding:12px;font-size:13px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}.mini dt{color:var(--mu)}.mini dd{font-weight:600;margin:0}
+.fl{position:absolute;padding:13px 16px;border-radius:16px;background:#fff;box-shadow:0 24px 40px rgba(18,55,111,.2);font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center;white-space:nowrap}
+.fl b{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;color:#fff;flex:none}.fl svg{width:19px}
+.f1{left:-150px;top:70px;transform:translateZ(120px)}.f2{right:-130px;top:230px;transform:translateZ(170px)}.f3{left:-110px;bottom:60px;transform:translateZ(90px)}
+.disc{position:absolute;border-radius:50%;transform:translateZ(-90px)}.d1{width:360px;height:360px;background:var(--mint);opacity:.22;left:-50px;top:80px}.d2{width:150px;height:150px;background:var(--amber);opacity:.55;right:-90px;top:-20px;transform:translateZ(-50px)}
+.floor{position:absolute;bottom:2%;width:300px;height:36px;border-radius:50%;background:radial-gradient(rgba(18,55,111,.28),transparent 70%)}
+
+/* quick actions */
+.qa{margin-top:-96px;position:relative;z-index:5;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;perspective:1000px}
+.q{position:relative;display:block;text-decoration:none;background:#fff;border:1px solid var(--ln);border-radius:20px;padding:26px 22px 24px;box-shadow:0 18px 40px rgba(18,55,111,.12);transform:rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .2s,box-shadow .2s;overflow:hidden;cursor:pointer}
+.q:hover{box-shadow:0 30px 56px rgba(18,55,111,.22)}
+.q::after{content:"";position:absolute;inset:0;background:radial-gradient(220px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.9),transparent 60%);opacity:0;transition:opacity .2s;pointer-events:none;mix-blend-mode:soft-light}.q:hover::after{opacity:1}
+.ic{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;color:#fff;margin-bottom:18px}.ic svg{width:26px}
+.q h3{font-size:21px;margin-bottom:6px}.q p{color:var(--mu);font-size:15px}.q span{display:inline-block;margin-top:14px;font-weight:600;color:var(--blue)}
+section{padding:clamp(60px,9vw,110px) 0}
+.sec h2{font-size:clamp(32px,4.4vw,54px);max-width:18ch}.sec>.wrap>p{margin-top:14px;color:var(--mu);max-width:54ch}
+.band{background:var(--blue);color:#fff}.band .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.band b{display:block;font:600 clamp(40px,5vw,64px) Fraunces,serif;color:var(--amber);line-height:1}.band p{margin-top:10px;color:#d4e2f7;max-width:28ch}
+.steps{margin-top:50px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;perspective:1100px}
+.st{background:var(--sky);border-radius:22px;padding:26px 22px 30px;transition:transform .4s;transform-origin:50% 100%}
+.st:hover{transform:rotateX(-8deg) translateY(-6px)}
+.st b{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--blue);color:#fff;font:600 20px Fraunces,serif;margin-bottom:60px}.st:nth-child(2) b{background:var(--mint)}.st:nth-child(3) b{background:var(--amber);color:#3a2600}
+.st h3{font-size:23px;margin-bottom:8px}.st p{color:var(--mu);font-size:16px}
+.lang{background:var(--sky)}.chips{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px}
+.chips span{padding:14px 24px;background:#fff;border:1px solid var(--ln);border-radius:99px;font-size:20px;font-weight:500;box-shadow:0 8px 18px rgba(18,55,111,.07);transition:transform .25s,background .25s,color .25s;cursor:pointer}
+.chips span:hover{transform:translateY(-6px) rotate(-2deg);background:var(--blue);color:#fff}
+.cta{text-align:center;background:var(--mint);color:#fff}.cta h2{font-size:clamp(32px,4.6vw,58px);margin:0 auto 26px;max-width:18ch}
+footer{background:var(--deep);color:#c5d6ee;padding:34px 0;font-size:15px}footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ==================== CINEMATIC SINGLE DOOR SECTION & MODAL ==================== */
+.door-section{background:linear-gradient(180deg,#12376f 0%,#091c3d 100%);color:#fff;padding:80px 0 100px;text-align:center;position:relative;overflow:hidden}
+.door-section::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(43,179,155,.15),transparent 70%);pointer-events:none}
+.door-section h2{font-size:clamp(36px,5vw,60px);color:#fff;margin-bottom:12px}
+.door-section p{color:#cbdcf5;font-size:18px;max-width:56ch;margin:0 auto 40px}
+
+.cinematic-portal{position:relative;width:min(380px,88vw);height:530px;margin:0 auto;perspective:1500px}
+.door-arch-frame{position:relative;width:100%;height:100%;background:#06142c;border:9px solid #d49f3e;border-radius:32px 32px 4px 4px;box-shadow:0 40px 90px rgba(0,0,0,.8),0 0 40px rgba(212,159,62,.3);overflow:hidden;transform-style:preserve-3d}
+.door-top-arch{position:absolute;top:0;left:0;right:0;height:44px;background:linear-gradient(180deg,#e5b352,#996918);border-bottom:3px solid #5a3e0c;display:flex;align-items:center;justify-content:center;color:#2e1f02;font:700 13px 'Instrument Sans',sans-serif;letter-spacing:3px}
+
+.portal-inner{position:absolute;inset:44px 0 0 0;background:radial-gradient(ellipse at 50% 30%,#ffffff,#edf5ff 60%,#b2d4ff 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .6s .25s;overflow-y:auto}
+.portal-inner.active{opacity:1}
+.portal-inner h3{color:var(--deep);font-size:17px;margin-bottom:10px}
+
+.portal-door{position:absolute;top:44px;left:0;right:0;bottom:0;background:linear-gradient(145deg,#1b4f9c,#102f61);border-left:5px solid #d49f3e;transform-origin:left center;transform-style:preserve-3d;transition:transform 1.15s cubic-bezier(.22,1,.36,1);box-shadow:inset -15px 0 35px rgba(0,0,0,.6);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.portal-door.open{transform:rotateY(-112deg);box-shadow:-25px 15px 50px rgba(0,0,0,.85)}
+
+.door-panel-carving{width:82%;height:78%;border:2px solid rgba(212,159,62,.45);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:14px}
+.panel-inset{flex:1;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(0,0,0,.35));border:1.5px solid rgba(212,159,62,.3);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.crest-circle{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d49f3e,#734b07);display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.crest-circle svg{width:36px;height:36px}
+.door-latch{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:20px;height:72px}
+.latch-plate{width:18px;height:54px;background:linear-gradient(90deg,#ffe18f,#d49f3e,#85560e);border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.7)}
+.latch-handle{width:38px;height:12px;background:linear-gradient(180deg,#fff3c4,#d49f3e);border-radius:6px;position:absolute;top:12px;right:-16px;box-shadow:0 4px 10px rgba(0,0,0,.6);transform-origin:left center;transition:transform .3s}
+.portal-door:hover .latch-handle{transform:rotate(18deg)}
+.tap-prompt{color:#ffe18f;font-size:15px;font-weight:700;margin-top:20px;text-align:center;letter-spacing:1px;animation:doorPulse 2s infinite alternate}
+@keyframes doorPulse{from{opacity:.75;transform:scale(.98)}to{opacity:1;transform:scale(1.03)}}
+.portal-light{position:absolute;inset:0;background:radial-gradient(circle at 10% 50%,rgba(255,228,153,.9),transparent 75%);opacity:0;pointer-events:none;transition:opacity .7s}
+.portal-door.open ~ .portal-light{opacity:1}
+
+.portal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.portal-lang-btn{background:#fff;border:1.5px solid var(--ln);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all .2s;color:var(--ink);box-shadow:0 4px 10px rgba(18,55,111,.08)}
+.portal-lang-btn:hover{transform:translateY(-2px);border-color:var(--blue);background:#f2f7ff;box-shadow:0 6px 16px rgba(27,79,156,.25)}
+.portal-lang-btn b{display:block;font-size:16px;font-family:Fraunces,Georgia,serif;color:var(--blue)}
+.portal-lang-btn span{display:block;font-size:11px;color:var(--mu);margin-top:2px}
+.portal-lang-btn small{display:block;font-size:10px;color:var(--mint);font-weight:600;margin-top:2px}
+
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.scene{height:520px}.qa{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.band .wrap{grid-template-columns:1fr}nav{display:none}.f1{left:-70px}.f2{right:-60px}.f3{left:-50px}}
+@media(max-width:520px){.qa,.steps{grid-template-columns:1fr}.util span:last-child{display:none}.portal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div class="util"><div class="wrap"><span>Made for ASHA workers and community health teams</span><span>Danger sign reported? <b>Refer to the PHC immediately.</b></span></div></div>
+<header>
+ <div class="wrap">
+  <a class="logo" href="#top"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="20" cy="20" r="16" opacity=".35"/><path d="M8 20h4l3-8 5 16 4-12 2 4h6"/></svg>SwastiQ</a>
+  <nav><a href="#door">Language Door</a><a href="#features">Features</a><a href="#how">How it works</a><a href="#languages">Languages</a></nav>
+  <span id="who" style="font-weight:600;color:var(--blue)"></span><button class="btn o" id="out" type="button">Sign out</button><a class="btn" href="app.html">Open the app</a>
+ </div>
+</header>
+
+<main id="top">
+<!-- HERO SECTION -->
+<section class="hero" style="padding-bottom:150px">
+ <div class="wrap">
+  <div>
+   <h1>Community health records, spoken.</h1>
+   <p>An ASHA worker says what happened on the visit. SwastiQ writes the record, reads it back, and saves it only after she confirms.</p>
+   <div class="row">
+    <a class="btn m" href="#door">Open Language Door</a>
+    <a class="btn o" href="app.html#voice">Try the voice assistant</a>
+    <a class="btn o" href="#how">See how it works</a>
+   </div>
+   <div class="trust">
+    <span><i></i>Eight Indian languages</span>
+    <span><i style="background:var(--amber)"></i>Danger signs flagged by fixed rules</span>
+   </div>
+  </div>
+  <div class="scene" id="scene">
+   <div class="floor"></div>
+   <div class="rig" id="rig">
+    <div class="disc d1"></div><div class="disc d2"></div>
+    <div class="phone">
+     <div class="screen">
+      <h4>Record a visit</h4>
+      <div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+      <div class="bars" aria-hidden="true"></div>
+      <p class="tx">“Beneficiary 102, weight 48 kilograms, next visit December 5.”</p>
+      <dl class="mini"><dt>ID</dt><dd>102</dd><dt>Weight</dt><dd>48 kg</dd><dt>Next visit</dt><dd>5 Dec</dd></dl>
+     </div>
+    </div>
+    <div class="fl f1"><b style="background:var(--mint)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></b>Record saved</div>
+    <div class="fl f2"><b style="background:var(--amber)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2600" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2zM12 10v4M12 17.5v.5"/></svg></b>Danger sign flagged</div>
+    <div class="fl f3"><b style="background:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg></b>Follow-up due today</div>
+   </div>
+  </div>
+ </div>
+ <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50C240 100 480 0 720 40S1200 90 1440 30V90H0z" fill="#fff"/></svg>
+</section>
+
+<!-- QUICK ACTIONS -->
+<div class="wrap" id="features">
+ <div class="qa">
+  <a class="q" href="app.html#voice"><div class="ic" style="background:var(--mint)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Record by voice</h3><p>Speak the visit in your own language.</p><span>Start a visit</span></a>
+  <a class="q" href="app.html#fu"><div class="ic" style="background:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg></div><h3>Follow-ups</h3><p>See what is due today and what is overdue.</p><span>Open tracker</span></a>
+  <a class="q" href="app.html#alerts"><div class="ic" style="background:var(--amber);color:#3a2600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2zM12 10v4M12 17.5v.5"/></svg></div><h3>Danger signs</h3><p>Fixed rules raise a clear referral alert.</p><span>View alerts</span></a>
+  <a class="q" href="app.html#reg"><div class="ic" style="background:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2zM9 8h6M9 12h6M9 16h4"/></svg></div><h3>Field register</h3><p>Searchable records with an audit trail.</p><span>Open register</span></a>
+ </div>
+</div>
+
+<!-- CINEMATIC SINGLE-DOOR ENTRANCE SECTION -->
+<section class="door-section" id="door">
+ <div class="wrap">
+  <h2>The Gateway to Community Health</h2>
+  <p>Click the door to open your language sanctuary. Select your regional tongue to experience SwastiQ completely translated.</p>
+  
+  <div class="cinematic-portal">
+   <div class="door-arch-frame">
+    <div class="door-top-arch">SWASTIQ HEALTH SANCTUARY</div>
+    <div class="portal-inner" id="portalInner">
+     <h3>Select Language</h3>
+     <div class="portal-grid" id="portalGrid">
+      <div class="portal-lang-btn" data-lang="Tamil"><b>தமிழ்</b><span>Tamil</span><small>வணக்கம்</small></div>
+      <div class="portal-lang-btn" data-lang="Hindi"><b>हिन्दी</b><span>Hindi</span><small>नमस्ते</small></div>
+      <div class="portal-lang-btn" data-lang="Telugu"><b>తెలుగు</b><span>Telugu</span><small>నమస్కారం</small></div>
+      <div class="portal-lang-btn" data-lang="Kannada"><b>ಕನ್ನಡ</b><span>Kannada</span><small>ನಮಸ್ಕಾರ</small></div>
+      <div class="portal-lang-btn" data-lang="Malayalam"><b>മലയാളം</b><span>Malayalam</span><small>നമസ്കാരം</small></div>
+      <div class="portal-lang-btn" data-lang="Marathi"><b>मराठी</b><span>Marathi</span><small>नमस्कार</small></div>
+      <div class="portal-lang-btn" data-lang="Gujarati"><b>ગુજરાતી</b><span>Gujarati</span><small>નમસ્તે</small></div>
+      <div class="portal-lang-btn" data-lang="English"><b>English</b><span>English</span><small>Welcome</small></div>
+     </div>
+    </div>
+    <div class="portal-door" id="portalDoor" title="Click to open the door">
+     <div class="door-panel-carving">
+      <div class="panel-inset"><div class="crest-circle"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="20" cy="20" r="16" opacity=".35"/><path d="M8 20h4l3-8 5 16 4-12 2 4h6"/></svg></div></div>
+      <div class="panel-inset"><div style="text-align:center;color:#d5e5ff;font-size:13px;font-weight:600">HEALTH GATEWAY<br><span style="font-size:11px;color:#d49f3e">ASHA PORTAL</span></div></div>
+     </div>
+     <div class="door-latch"><div class="latch-plate"></div><div class="latch-handle"></div></div>
+     <div class="tap-prompt">🚪 CLICK DOOR TO OPEN</div>
+    </div>
+    <div class="portal-light"></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+ <div class="wrap">
+  <h2>From a spoken visit to a checked record.</h2>
+  <p>Four steps, and nothing is saved until the worker says yes.</p>
+  <div class="steps">
+   <div class="st"><b>1</b><h3>Speak</h3><p>Tap the microphone and describe the visit.</p></div>
+   <div class="st"><b>2</b><h3>Check</h3><p>Review the record card and correct any field by voice.</p></div>
+   <div class="st"><b>3</b><h3>Confirm</h3><p>SwastiQ reads the record back. You confirm, then it saves.</p></div>
+   <div class="st"><b>4</b><h3>Follow up</h3><p>The next visit appears in your tracker automatically.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- BAND -->
+<section class="band">
+ <div class="wrap">
+  <div><b>8</b><p>languages understood, even when mixed in one sentence</p></div>
+  <div><b>1</b><p>confirmation before any record is saved</p></div>
+  <div><b>100%</b><p>of danger-sign alerts come from fixed rules, not AI guesses</p></div>
+ </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="sec lang" id="languages">
+ <div class="wrap">
+  <h2>Speak the way you speak.</h2>
+  <p>Voice recognition by Gnani Prisma. The read-back is spoken by Gnani Timbre.</p>
+  <div class="chips" id="langChips">
+   <span data-lang="Tamil">தமிழ்</span>
+   <span data-lang="Hindi">हिन्दी</span>
+   <span data-lang="Telugu">తెలుగు</span>
+   <span data-lang="Kannada">ಕನ್ನಡ</span>
+   <span data-lang="Malayalam">മലയാളം</span>
+   <span data-lang="Marathi">मराठी</span>
+   <span data-lang="Gujarati">ગુજરાતી</span>
+   <span data-lang="English">English</span>
+  </div>
+ </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+ <div class="wrap">
+  <h2>Ready to record your first visit?</h2>
+  <a class="btn a" href="#door">Open Door & Select Language</a>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <span>SwastiQ. Voice-first community health register.</span>
+  <span>Alerts follow fixed rules. SwastiQ does not diagnose or advise treatment.</span>
+ </div>
+</footer>
+
+<script>
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches,rig=document.getElementById('rig');
+const bars=document.querySelector('.bars');for(let i=0;i<15;i++){const b=document.createElement('i');b.style.height=(10+Math.abs(Math.sin(i))*20)+'px';b.style.animationDelay=(i*.08)+'s';bars.appendChild(b)}
+let tx=0,ty=0,cx=0,cy=0,sc=0;
+addEventListener('pointermove',e=>{tx=e.clientX/innerWidth-.5;ty=e.clientY/innerHeight-.5});
+addEventListener('scroll',()=>{sc=Math.min(scrollY,700)},{passive:true});
+function loop(){cx+=(tx-cx)*.07;cy+=(ty-cy)*.07;rig.style.transform=`rotateY(${-22+cx*26+sc*.03}deg) rotateX(${8-cy*14}deg) translateY(${-sc*.05}px)`;requestAnimationFrame(loop)}
+if(rm)rig.style.transform='rotateY(-18deg) rotateX(6deg)';else loop();
+
+document.querySelectorAll('.q').forEach(c=>{
+ c.addEventListener('pointermove',e=>{
+  if(rm)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  c.style.setProperty('--ry',(x-.5)*12+'deg');c.style.setProperty('--rx',(.5-y)*12+'deg');c.style.setProperty('--gx',x*100+'%');c.style.setProperty('--gy',y*100+'%')
+ });
+ c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+});
+
+/* CINEMATIC SINGLE DOOR LOGIC */
+const pDoor=document.getElementById('portalDoor');
+const pInner=document.getElementById('portalInner');
+
+function openDoor(){
+ pDoor.classList.add('open');
+ setTimeout(()=>{pInner.classList.add('active')},350);
+}
+
+pDoor.addEventListener('click',openDoor);
+
+function selectLang(lang){
+ localStorage.setItem('sq_lang',lang);
+ // Smooth transition into app.html with language query parameter
+ window.location.href=`app.html?lang=${encodeURIComponent(lang)}`;
+}
+
+document.querySelectorAll('.portal-lang-btn').forEach(b=>{
+ b.addEventListener('click',()=>{
+  const l=b.dataset.lang;
+  selectLang(l);
+ });
+});
+
+document.querySelectorAll('#langChips span').forEach(s=>{
+ s.addEventListener('click',()=>{
+  const l=s.dataset.lang;
+  // Scroll to door, open door and enter in that language
+  const dSec=document.getElementById('door');
+  dSec.scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+   openDoor();
+   setTimeout(()=>selectLang(l),600);
+  },400);
+ });
+});
+</script>
+<script>fetch("/api/auth?a=me").then(r=>r.json()).then(m=>{document.getElementById("who").textContent=m.name}).catch(()=>{});document.getElementById("out").onclick=()=>fetch("/api/auth?a=logout",{method:"POST"}).finally(()=>location.href="/");</script>
+</body>
+</html>
